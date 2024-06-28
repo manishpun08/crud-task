@@ -91,7 +91,7 @@ router.post(
 
     // if no otp, throw error
     if (!otpDoc) {
-      return res.status(400).send({ message: "Something went wrong." });
+      return res.status(400).send({ message: "no otp doc fount" });
     }
 
     //check otp if matches
@@ -99,7 +99,7 @@ router.post(
 
     // if otp not match, throw error
     if (!isOtpMatch) {
-      return res.status(400).send({ message: "Something went wrong." });
+      return res.status(400).send({ message: "otp doesnot match" });
     }
 
     // set is verified to true

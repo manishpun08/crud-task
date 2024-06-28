@@ -14,7 +14,7 @@ export let verifyOtpValidation = Yup.object({
     .required("Email is required.")
     .trim()
     .lowercase(),
-  otp: Yup.number().required(),
+  otp: Yup.string().required(),
 });
 
 export let forgetPasswordValidationSchema = Yup.object({
