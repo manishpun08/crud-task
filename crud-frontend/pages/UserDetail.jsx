@@ -1,25 +1,69 @@
 import React from "react";
 import { useQuery } from "react-query";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import $axios from "../lib/axios.instance";
+import $axios, { getUserDetails } from "../lib/axios.instance";
 
 const UserDetail = (props) => {
-//   console.log(props);
   const params = useParams();
-  const id = params?._id;
-
-  console.log(id);
-
-  //   const navigate = useNavigate();
 
   // api hit
-  useQuery({
+  const { isLoading, isError, error, data } = useQuery({
     queryKey: ["get-user-details"],
-    queryFn: async () => {
-      return await $axios.get(`/user/details/${id}`);
+    queryFn: () => {
+      return getUserDetails(params?.id);
     },
   });
-  return <div>hello</div>;
+  const userDetails = data?.data.userDetails;
+  console.log(userDetails);
+
+  return (
+    <>
+      <div className="container text-center">
+        <h1 className="fw-bold">User Details</h1>
+      </div>
+
+      <div
+        className="container my-2"
+        style={{
+          gap: "1rem",
+          padding: "2rem",
+          boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
+          width: "800px",
+          borderRadius: "10px",
+          transform: "translateY(5%)",
+          margin: "auto",
+        }}
+      >
+        <div className="row">
+          <div className="col-6">
+            <strong>User Name:</strong>
+          </div>
+          <div className="col-6">
+            <p className="text-capitalize"> {userDetails?.name}</p>
+          </div>
+          <div className="col-6">
+            <strong>Email Address:</strong>
+          </div>
+          <div className="col-6">
+            <p>{userDetails?.email}</p>
+          </div>
+
+          <div className="col-6">
+            <strong>Gender:</strong>
+          </div>
+          <div className="col-6">
+            <p className="text-capitalize">{userDetails?.gender}</p>
+          </div>
+          <div className="col-6">
+            <strong>Created At:</strong>
+          </div>
+          <div className="col-6">
+            <p className="text-capitalize">{userDetails?.createdAt}</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
 
 export default UserDetail;

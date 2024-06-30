@@ -60,51 +60,69 @@ const LoginUser = () => {
             }}
           >
             <h1 className="text-center fw-bold">Sign In</h1>
-
-            <div className="email">
-              <label className="me-5" htmlFor="email">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                className="form-label"
-                type="email"
-                {...formik.getFieldProps("email")}
-              />
-              {formik.touched.email && formik.errors.email ? (
-                <div className="text-danger">{formik.errors.email}</div>
-              ) : null}
+            <div className="row mb-3">
+              <div className="col-3 d-flex align-items-center">
+                <label htmlFor="email" className="form-label me-2 mb-0">
+                  Email
+                </label>
+              </div>
+              <div className="col-9">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className={`form-control ${
+                    formik.touched.email && formik.errors.email
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                  {...formik.getFieldProps("email")}
+                />
+                {formik.touched.email && formik.errors.email ? (
+                  <div className="invalid-feedback">{formik.errors.email}</div>
+                ) : null}
+              </div>
             </div>
 
-            <div className="password">
-              <label htmlFor="password" className="form-label me-3">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                {...formik.getFieldProps("password")}
-              />
-              {formik.touched.password && formik.errors.password ? (
-                <div className="text-danger">{formik.errors.password}</div>
-              ) : null}
+            <div className="row ">
+              <div className="col-3 d-flex align-items-center">
+                <label htmlFor="password" className="form-label me-2 mb-0">
+                  Password
+                </label>
+              </div>
+              <div className="col-9">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  className={`form-control ${
+                    formik.touched.password && formik.errors.password
+                      ? "is-invalid"
+                      : ""
+                  }`}
+                  {...formik.getFieldProps("password")}
+                />
+                {formik.touched.password && formik.errors.password ? (
+                  <div className="invalid-feedback">
+                    {formik.errors.password}
+                  </div>
+                ) : null}
+              </div>
             </div>
 
             <button
               type="submit"
-              style={{ width: "50%", margin: "0 auto" }}
+              style={{ width: "70%", margin: "0 auto" }}
               className="btn btn-primary text-center align-center"
             >
               Submit
             </button>
 
             <Link to="/forgot-password" className="text-center">
-              Forget Password{" "}
+              Forget Password?
             </Link>
             <Link to="/register" className="text-center">
-              New here? Register{" "}
+              New here? Register
             </Link>
           </form>
         )}

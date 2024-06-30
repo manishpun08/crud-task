@@ -5,6 +5,13 @@ const $axios = axios.create({
   timeout: 5000,
 });
 
+export const getUserDetails = async (id) => {
+  return await $axios.get(`/user/details/${id}`);
+};
+
+export const deleteUser = async (id) => {
+  return await $axios.get(`/user/delete/${id}`);
+};
 // Add a request interceptor
 $axios.interceptors.request.use(function (config) {
   // Do something before request is sent

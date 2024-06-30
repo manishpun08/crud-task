@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import $axios from "../../lib/axios.instance";
+import DeleteUserModal from "./DeleteUserModal";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -22,7 +23,14 @@ const Home = () => {
       <div className="mt-3">
         <div className="container">
           <div className="add_btn my-2">
-            <button className="btn btn-primary">Add Person</button>
+            <button
+              onClick={() => {
+                navigate("/add/user");
+              }}
+              className="btn btn-primary"
+            >
+              Add Person
+            </button>
           </div>
           <div className="table-responsive">
             {isLoading ? (
@@ -37,7 +45,9 @@ const Home = () => {
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
                     <th scope="col">Gender</th>
-                    <th scope="col">Action</th>
+                    <th className="text-center" scope="col">
+                      Actions
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -56,12 +66,16 @@ const Home = () => {
                         >
                           <i className="fa-solid fa-eye"></i>
                         </button>
-                        <button className="btn btn-primary">
-                          <i className="fa-solid fa-pen"></i>{" "}
+                        <button
+                          onClick={() => {
+                            navigate(`/editUser/${item._id}`);
+                          }}
+                          className="btn btn-primary"
+                        >
+                          <i className="fa-solid fa-pen"></i>
                         </button>
-                        <button className="btn btn-danger">
-                          <i className="fa-solid fa-trash"></i>{" "}
-                        </button>
+
+                        <DeleteUserModal {...getUser} />
                       </td>
                     </tr>
                   ))}

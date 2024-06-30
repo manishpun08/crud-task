@@ -1,32 +1,15 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery } from "react-query";
-import $axios from "../lib/axios.instance";
+import { Link, useNavigate } from "react-router-dom";
+import { useMutation } from "react-query";
+import $axios from "../../lib/axios.instance";
 
-const EditUser = () => {
+const AddUser = () => {
   const navigate = useNavigate();
-  const params = useParams();
 
   // api hit
-  // get user details
-  const { isLoading, isError, error, data } = useQuery({
-    queryKey: ["get-user-details"],
-    queryFn: async () => {
-      return await $axios.get(`/user/details/${params.id}`);
-    },
-  });
-
-  const userDetails = data?.data?.userDetails;
-
-  // for mutating/edit
-  const {
-    isLoading: editUserLoading,
-    isError: editUserError,
-    error: userError,
-    mutate,
-  } = useMutation({
+  const { isLoading, isError, error, mutate } = useMutation({
     mutationKey: ["register-user"],
     mutationFn: async (values) => {
       return await $axios.post("/user/register", values);
@@ -39,7 +22,6 @@ const EditUser = () => {
   });
   return (
     <Formik
-      enableReinitialize
       initialValues={{
         name: "",
         email: "",
@@ -83,7 +65,7 @@ const EditUser = () => {
             margin: "auto",
           }}
         >
-          <h1 className="text-center fw-bold">Sign Up</h1>
+          <h1 className="text-center fw-bold">Add User</h1>
 
           <div className="name">
             <label htmlFor="name" className="form-label me-2">
@@ -155,15 +137,10 @@ const EditUser = () => {
           >
             Submit
           </button>
-
-          <Link to="/login" className="text-center">
-            {" "}
-            Already Registered? Login
-          </Link>
         </form>
       )}
     </Formik>
   );
 };
 
-export default EditUser;
+export default AddUser;
