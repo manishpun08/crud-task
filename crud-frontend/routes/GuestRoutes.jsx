@@ -1,4 +1,5 @@
 import BaseLayout from "../layouts/BaseLayout";
+import { GuestGard } from "../layouts/guard/GuestGuard";
 import ForgetPassword from "../pages/ForgetPassword";
 import LoginUser from "../pages/LoginUser";
 import OtpVerify from "../pages/OtpVerify";
@@ -8,7 +9,11 @@ import ResetPassword from "../pages/ResetPassword";
 const GuestRoutes = [
   {
     path: "/",
-    element: <BaseLayout />,
+    element: (
+      <GuestGard>
+        <BaseLayout />
+      </GuestGard>
+    ),
     children: [
       {
         path: "register",

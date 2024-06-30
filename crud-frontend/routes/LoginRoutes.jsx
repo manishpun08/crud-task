@@ -1,4 +1,5 @@
 import MainLayout from "../layouts/MainLayout";
+import AuthGuard from "../layouts/guard/AuthGuard";
 import EditUser from "../pages/EditUser";
 import UserDetail from "../pages/UserDetail";
 import AddUser from "../src/component/AddUser";
@@ -7,7 +8,11 @@ import Home from "../src/component/Home";
 const LoginRoutes = [
   {
     path: "/",
-    element: <MainLayout />,
+    element: (
+      <AuthGuard>
+        <MainLayout />
+      </AuthGuard>
+    ),
     children: [
       {
         path: "home",

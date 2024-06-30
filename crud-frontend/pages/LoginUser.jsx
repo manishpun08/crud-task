@@ -1,13 +1,19 @@
 import { Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import $axios from "../lib/axios.instance";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const LoginUser = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
   //api hit
   const { isLoading, isError, error, mutate } = useMutation({
     mutationKey: ["login-user"],
@@ -60,6 +66,7 @@ const LoginUser = () => {
             }}
           >
             <h1 className="text-center fw-bold">Sign In</h1>
+
             <div className="row mb-3">
               <div className="col-3 d-flex align-items-center">
                 <label htmlFor="email" className="form-label me-2 mb-0">
@@ -84,17 +91,17 @@ const LoginUser = () => {
               </div>
             </div>
 
-            <div className="row ">
+            <div className="row mb-3">
               <div className="col-3 d-flex align-items-center">
                 <label htmlFor="password" className="form-label me-2 mb-0">
                   Password
                 </label>
               </div>
-              <div className="col-9">
+              <div className="col-9 position-relative">
                 <input
                   id="password"
                   name="password"
-                  type="password"
+                  type={showPassword ? "text" : "password"}
                   className={`form-control ${
                     formik.touched.password && formik.errors.password
                       ? "is-invalid"
@@ -102,6 +109,22 @@ const LoginUser = () => {
                   }`}
                   {...formik.getFieldProps("password")}
                 />
+                <button
+                  type="button"
+                  className="btn btn-outline-secondary"
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    boxShadow: "none",
+                    position: "absolute",
+                    top: "50%",
+                    right: "1rem",
+                    transform: "translateY(-50%)",
+                  }}
+                  onClick={togglePasswordVisibility}
+                >
+                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                </button>
                 {formik.touched.password && formik.errors.password ? (
                   <div className="invalid-feedback">
                     {formik.errors.password}

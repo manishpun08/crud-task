@@ -18,7 +18,6 @@ const EditUser = () => {
     },
   });
   const userDetails = data?.data.userDetails;
-  console.log(userDetails);
 
   // for mutating/edit
   const {
@@ -83,52 +82,78 @@ const EditUser = () => {
         >
           <h1 className="text-center fw-bold">Edit User</h1>
 
-          <div className="name">
-            <label htmlFor="name" className="form-label me-2">
-              Name
-            </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              {...formik.getFieldProps("name")}
-            />
-            {formik.touched.name && formik.errors.name ? (
-              <div className="text-danger">{formik.errors.name}</div>
-            ) : null}
+          <div className="row mb-3">
+            <div className="col-3 d-flex align-items-center">
+              <label htmlFor="name" className="form-label me-2 mb-0">
+                Name
+              </label>
+            </div>
+            <div className="col-9">
+              <input
+                id="name"
+                name="name"
+                type="text"
+                className={`form-control ${
+                  formik.touched.name && formik.errors.name ? "is-invalid" : ""
+                }`}
+                {...formik.getFieldProps("name")}
+              />
+              {formik.touched.name && formik.errors.name ? (
+                <div className="invalid-feedback">{formik.errors.name}</div>
+              ) : null}
+            </div>
           </div>
 
-          <div className="email">
-            <label className="me-4" htmlFor="email">
-              Email
-            </label>
-            <input
-              id="email"
-              name="email"
-              className="form-label"
-              type="email"
-              {...formik.getFieldProps("email")}
-            />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="text-danger">{formik.errors.email}</div>
-            ) : null}
+          <div className="row mb-3">
+            <div className="col-3 d-flex align-items-center">
+              <label htmlFor="email" className="form-label me-2 mb-0">
+                Email
+              </label>
+            </div>
+            <div className="col-9">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                className={`form-control ${
+                  formik.touched.email && formik.errors.email
+                    ? "is-invalid"
+                    : ""
+                }`}
+                {...formik.getFieldProps("email")}
+              />
+              {formik.touched.email && formik.errors.email ? (
+                <div className="invalid-feedback">{formik.errors.email}</div>
+              ) : null}
+            </div>
           </div>
 
-          <div className="gender">
-            <select
-              id="gender"
-              name="gender"
-              className="form-select"
-              {...formik.getFieldProps("gender")}
-            >
-              <option value="" label="Select gender" />
-              <option value="male" label="Male" />
-              <option value="female" label="Female" />
-              <option value="other" label="Other" />
-            </select>
-            {formik.touched.gender && formik.errors.gender ? (
-              <div className="text-danger">{formik.errors.gender}</div>
-            ) : null}
+          <div className="row mb-3">
+            <div className="col-3 d-flex align-items-center">
+              <label htmlFor="gender" className="form-label me-2 mb-0">
+                Gender
+              </label>
+            </div>
+            <div className="col-9">
+              <select
+                id="gender"
+                name="gender"
+                className={`form-select ${
+                  formik.touched.gender && formik.errors.gender
+                    ? "is-invalid"
+                    : ""
+                }`}
+                {...formik.getFieldProps("gender")}
+              >
+                <option value="" label="Select gender" />
+                <option value="male" label="Male" />
+                <option value="female" label="Female" />
+                <option value="other" label="Other" />
+              </select>
+              {formik.touched.gender && formik.errors.gender ? (
+                <div className="invalid-feedback">{formik.errors.gender}</div>
+              ) : null}
+            </div>
           </div>
 
           <button

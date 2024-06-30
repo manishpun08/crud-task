@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { useMutation } from "react-query";
+import { useMutation, useQueryClient } from "react-query";
 import { useNavigate, useParams } from "react-router-dom";
-import { deleteUser } from "../../lib/axios.instance";
+import $axios, { deleteUser } from "../../lib/axios.instance";
 
 const DeleteUserModal = (props) => {
-  console.log(props);
-  const params = useParams();
-  const userId = params?.id;
+  const queryClient = useQueryClient();
 
   const navigate = useNavigate();
   const [modalVisible, setModalVisible] = useState(false);
@@ -16,12 +14,13 @@ const DeleteUserModal = (props) => {
   // api hit
   const { isLoading, mutate } = useMutation({
     mutationKey: ["delete-user"],
-    mutationFn: async () => {
-      return await deleteUser(userId);
+    mutationFn: async (_id) => {
+      return await $axios.delete(`/user/delete/${_id}`);
     },
 
     onSuccess: (res) => {
       navigate("/home");
+      queryClient.invalidateQueries("get-user");
       console.log(res?.data?.message);
     },
 
@@ -68,7 +67,7 @@ const DeleteUserModal = (props) => {
                 className="btn btn-primary"
                 onClick={() => {
                   handleModalToggle();
-                  mutate();
+                  mutate(props._id);
                 }}
               >
                 Yes

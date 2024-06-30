@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
 import { Link, useNavigate } from "react-router-dom";
 import { useMutation } from "react-query";
 import $axios from "../lib/axios.instance";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 
 const RegisterUser = () => {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prevState) => !prevState);
+  };
 
   // api hit
   const { isLoading, isError, error, mutate } = useMutation({
@@ -119,11 +126,11 @@ const RegisterUser = () => {
                 Password
               </label>
             </div>
-            <div className="col-9">
+            <div className="col-9 position-relative">
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 className={`form-control ${
                   formik.touched.password && formik.errors.password
                     ? "is-invalid"
@@ -131,6 +138,22 @@ const RegisterUser = () => {
                 }`}
                 {...formik.getFieldProps("password")}
               />
+              <button
+                type="button"
+                className="btn btn-outline-secondary no-hover"
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  boxShadow: "none",
+                  position: "absolute",
+                  top: "50%",
+                  right: "2rem",
+                  transform: "translateY(-50%)",
+                }}
+                onClick={togglePasswordVisibility}
+              >
+                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+              </button>
               {formik.touched.password && formik.errors.password ? (
                 <div className="invalid-feedback">{formik.errors.password}</div>
               ) : null}

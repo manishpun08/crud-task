@@ -51,34 +51,41 @@ const Home = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {getUser.map((item, index) => (
-                    <tr key={item._id}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{item.name}</td>
-                      <td>{item.email}</td>
-                      <td>{item.gender}</td>
-                      <td className="d-flex justify-content-between">
-                        <button
-                          onClick={() => {
-                            navigate(`/userDetail/${item._id}`);
-                          }}
-                          className="btn btn-success"
-                        >
-                          <i className="fa-solid fa-eye"></i>
-                        </button>
-                        <button
-                          onClick={() => {
-                            navigate(`/editUser/${item._id}`);
-                          }}
-                          className="btn btn-primary"
-                        >
-                          <i className="fa-solid fa-pen"></i>
-                        </button>
-
-                        <DeleteUserModal {...getUser} />
+                  {getUser.length === 0 ? (
+                    <tr>
+                      <td className="text-center" colSpan="5">
+                        <h2 className="text-danger fw-bold">No User Found</h2>
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    getUser.map((item, index) => (
+                      <tr key={item._id}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{item.name}</td>
+                        <td>{item.email}</td>
+                        <td>{item.gender}</td>
+                        <td className="d-flex justify-content-between">
+                          <button
+                            onClick={() => {
+                              navigate(`/userDetail/${item._id}`);
+                            }}
+                            className="btn btn-success"
+                          >
+                            <i className="fa-solid fa-eye"></i>
+                          </button>
+                          <button
+                            onClick={() => {
+                              navigate(`/editUser/${item._id}`);
+                            }}
+                            className="btn btn-primary"
+                          >
+                            <i className="fa-solid fa-pen"></i>
+                          </button>
+                          <DeleteUserModal _id={item._id} />
+                        </td>
+                      </tr>
+                    ))
+                  )}
                 </tbody>
               </table>
             )}

@@ -50,24 +50,30 @@ const ForgetPassword = () => {
           >
             <h2 className="text-center">Forgot password?</h2>
             <p>
-              Enter your email address below and we will send you password reset
-              OTP.
+              Enter your email address below and we will send you a password
+              reset OTP.
             </p>
 
-            <div className="email">
-              <label className="me-5" htmlFor="email">
-                Email
-              </label>
-              <input
-                id="email"
-                name="email"
-                className="form-label"
-                type="email"
-                {...getFieldProps("email")}
-              />
-              {touched.email && errors.email ? (
-                <div className="text-danger">{errors.email}</div>
-              ) : null}
+            <div className="row mb-3">
+              <div className="col-3 d-flex align-items-center">
+                <label htmlFor="email" className="form-label me-2 mb-0">
+                  Email
+                </label>
+              </div>
+              <div className="col-9">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className={`form-control ${
+                    touched.email && errors.email ? "is-invalid" : ""
+                  }`}
+                  {...getFieldProps("email")}
+                />
+                {touched.email && errors.email ? (
+                  <div className="invalid-feedback">{errors.email}</div>
+                ) : null}
+              </div>
             </div>
 
             <button
@@ -75,7 +81,7 @@ const ForgetPassword = () => {
               style={{ width: "50%", margin: "0 auto" }}
               className="btn btn-primary text-center align-center"
             >
-              send email
+              Send Email
             </button>
           </form>
         )}
