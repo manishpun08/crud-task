@@ -1,5 +1,8 @@
 import express from "express";
-import { userValidationSchema } from "./user.middleware.js";
+import {
+  checkMongoIdFromParams,
+  userValidationSchema,
+} from "./user.middleware.js";
 import { User } from "./user.model.js";
 import * as bcrypt from "bcrypt";
 import { loginUserValidation } from "./user.validation.js";
@@ -90,6 +93,91 @@ router.post(
       user: user,
       token: token,
     });
+  }
+);
+
+// get all user
+router.get("/user/get", async (req, res) => {
+  const allUser = await User.find();
+  return res.status(200).send(allUser);
+});
+
+// get user details
+router.get(
+  "/user/details/:id",
+  // validating mongoId
+  checkMongoIdFromParams,
+  // user details
+  async (req, res) => {
+    // extract userid from req.params
+    const userId = req.params.id;
+
+    // find user
+    const user = await User.findOne({ _id: userId });
+
+    // if not user throw error
+    if (!user) {
+      return res.status(404).send({ message: "user does not exits." });
+    }
+    return res.status(200).send({ message: "success", userDetails: user });
+  }
+);
+// delete user
+router.delete(
+  "/user/delete/:id",
+  // validating mongoId
+  checkMongoIdFromParams,
+  // delete user
+  async (req, res) => {
+    // check user id from req.params
+    const userId = req.params.id;
+    // find user
+    const user = await User.findOne({ _id: userId });
+    // if not user, throw error
+    if (!user) {
+      return res.status(404).send({ message: "user does not exist." });
+    }
+    // delete user
+    await User.deleteOne({ _id: userId });
+
+    // send proper response
+    return res.status(200).send({ message: "user is deleted successfully." });
+  }
+);
+
+// edit user
+router.put(
+  "/user/edit/:id",
+  // validating mongoId
+  checkMongoIdFromParams,
+
+  // edit user
+  async (req, res) => {
+    // check user id from req.params
+    const userId = req.params.id;
+
+    // find user
+    const user = await User.findOne({ _id: userId });
+
+    // if not user, throw error
+    if (!user) {
+      return res.status(404).send({ message: "user does not exist." });
+    }
+    // extract new values from req.body
+    const newValues = req.body;
+
+    // edit user
+    await User.updateOne(
+      { _id: userId },
+      {
+        $set: {
+          ...newValues,
+        },
+      }
+    );
+
+    // send proper response
+    return res.status(200).send({ message: "User is updated successfully." });
   }
 );
 

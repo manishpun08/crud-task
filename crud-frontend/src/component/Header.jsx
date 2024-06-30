@@ -1,6 +1,9 @@
 import React from "react";
+import LogoutModal from "./LogoutModal";
 
 const Header = () => {
+  const name = localStorage.getItem("name");
+
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
@@ -34,17 +37,11 @@ const Header = () => {
             </ul>
 
             {/* left side  */}
-            <form className="d-flex" role="search">
-              <input
-                className="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button className="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+            <div className="d-flex align-items-center">
+              <p className="mb-0 text-capitalize me-2">Welcome, {name}</p>
+              {/* <!-- Vertically centered modal --> */}
+              <LogoutModal />
+            </div>
           </div>
         </div>
       </nav>

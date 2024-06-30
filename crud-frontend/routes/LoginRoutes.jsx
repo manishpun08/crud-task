@@ -1,4 +1,5 @@
 import MainLayout from "../layouts/MainLayout";
+import UserDetail from "../pages/UserDetail";
 import Home from "../src/component/Home";
 
 const LoginRoutes = [
@@ -9,6 +10,10 @@ const LoginRoutes = [
       {
         path: "home",
         element: <Home />,
+      },
+      {
+        path: "/userDetail",
+        element: <UserDetail />,
       },
     ],
   },

@@ -17,7 +17,9 @@ const LoginUser = () => {
     // on success
     onSuccess: (response) => {
       navigate("/home");
-      return response?.data?.message;
+      localStorage.setItem("token", response?.data?.token);
+      localStorage.setItem("name", response?.data?.user?.name);
+      localStorage.setItem("userId", response?.data?.user?._id);
     },
   });
   return (
