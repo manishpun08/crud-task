@@ -10,6 +10,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 const RegisterUser = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -120,7 +121,7 @@ const RegisterUser = () => {
             </div>
           </div>
 
-          <div className="row mb-3">
+          <div className="row ">
             <div className="col-3 d-flex align-items-center">
               <label htmlFor="password" className="form-label me-2 mb-0">
                 Password
@@ -138,26 +139,23 @@ const RegisterUser = () => {
                 }`}
                 {...formik.getFieldProps("password")}
               />
-              <button
-                type="button"
-                className="btn btn-outline-secondary no-hover"
-                style={{
-                  border: "none",
-                  background: "transparent",
-                  boxShadow: "none",
-                  position: "absolute",
-                  top: "50%",
-                  right: "2rem",
-                  transform: "translateY(-50%)",
-                }}
-                onClick={togglePasswordVisibility}
-              >
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </button>
+
               {formik.touched.password && formik.errors.password ? (
                 <div className="invalid-feedback">{formik.errors.password}</div>
               ) : null}
             </div>
+          </div>
+          {/* Toggle password visibility */}
+          <div className="mb-3 form-check">
+            <input
+              type="checkbox"
+              className="form-check-input"
+              id="showPassword"
+              onChange={handleClickShowPassword}
+            />
+            <label className="form-check-label" htmlFor="showPassword">
+              Show Password
+            </label>
           </div>
 
           <div className="row mb-3">

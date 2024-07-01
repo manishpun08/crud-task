@@ -4,12 +4,13 @@ import { useMutation } from "react-query";
 import { Link, useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import $axios from "../lib/axios.instance";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+
+const handleClickShowPassword = () => setShowPassword((show) => !show);
 
 const LoginUser = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const togglePasswordVisibility = () => {
     setShowPassword((prevState) => !prevState);
@@ -91,7 +92,7 @@ const LoginUser = () => {
               </div>
             </div>
 
-            <div className="row mb-3">
+            <div className="row ">
               <div className="col-3 d-flex align-items-center">
                 <label htmlFor="password" className="form-label me-2 mb-0">
                   Password
@@ -109,28 +110,25 @@ const LoginUser = () => {
                   }`}
                   {...formik.getFieldProps("password")}
                 />
-                <button
-                  type="button"
-                  className="btn btn-outline-secondary"
-                  style={{
-                    border: "none",
-                    background: "transparent",
-                    boxShadow: "none",
-                    position: "absolute",
-                    top: "50%",
-                    right: "1rem",
-                    transform: "translateY(-50%)",
-                  }}
-                  onClick={togglePasswordVisibility}
-                >
-                  <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-                </button>
+
                 {formik.touched.password && formik.errors.password ? (
                   <div className="invalid-feedback">
                     {formik.errors.password}
                   </div>
                 ) : null}
               </div>
+            </div>
+            {/* Toggle password visibility */}
+            <div className="mb-3 form-check">
+              <input
+                type="checkbox"
+                className="form-check-input"
+                id="showPassword"
+                onChange={handleClickShowPassword}
+              />
+              <label className="form-check-label" htmlFor="showPassword">
+                Show Password
+              </label>
             </div>
 
             <button
