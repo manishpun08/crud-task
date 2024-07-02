@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 // const userName = process.env.USER_NAME;
 // const userPassword = process.env.USER_PASSWORD;
 
-const dbName = "TodoList";
+const dbName = "crudTask";
 const userName = "manishpunmagar999";
 const userPassword = "manish123";
 
